@@ -1,0 +1,23 @@
+product
+pid
+pname
+category
+description:{color,gty,measure_in},
+price
+quantity
+discount
+
+db.createCollection("product")
+
+
+db.product.insertMany([
+    {pid: 1, pname: "chocolate", cat: "bakery", description: {color: "brown", qty_measure_in: "kg"}, price: 2000, qty: 1, discount: 20},
+    {pid: 2, pname: "laptop", cat: "electronic", description: {color: "black", qty_measure_in: "kg"}, price: 45000, qty: 1, discount: 50},
+    {pid: 3, pname: "shoes", cat: "footwear", description: {color: "brown", qty_measure_in: "gm"}, price: 25000, qty: 2, discount: 50},
+    {pid: 4, pname: "cordset", cat: "clothes", description: {color: "blue", qty_measure_in: "kg"}, price: 4500, qty: 4, discount: 60},
+    {pid: 5, pname: "tote bag", cat: "bag", description: {color: "yellow", qty_measure_in: "gm"}, price: 6000, qty: 1, discount: 30},
+    {pid: 6, pname: "casio", cat: "watch", description: {color: "rose gold", qty_measure_in: "gm"}, price: 4000, qty: 2, discount: 20},
+    {pid: 7, pname: "perfume", cat: "mist", description: {color: "blue", qty_measure_in: "ml"}, price: 5000, qty: 3, discount: 4},
+    {pid: 8, pname: "chocolate", cat: "bakery", description: {color: "brown", qty_measure_in: "kg"}, price: 2000, qty: 1, discount: 20}
+])
+

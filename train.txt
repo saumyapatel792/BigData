@@ -1,0 +1,178 @@
+train 
+
+train_id
+train_name
+source_station
+destination_station
+inter_station(array)
+type of train
+type of coachs{type,price},(array)
+speed
+ticket
+duration
+
+
+
+
+
+
+db.createCollection("Train")
+
+
+db.train.insert([
+{
+  "train_id": "12345",
+  "train_name": "Express Superfast",
+  "source_station": "Ahmedabad Junction",
+  "destination_station": "Delhi Junction",
+  "inter_stations": ["Vadodara", "Ratlam", "Kota", "Mathura"],
+  "type_of_train": "Superfast",
+  "type_of_coaches": [
+    {"type": "Sleeper", "price": 500},
+    {"type": "AC 3 Tier", "price": 1200},
+    {"type": "AC 2 Tier", "price": 1800},
+    {"type": "AC 1 Tier", "price": 2500}
+  ],
+  "speed": "110 km/h",
+  "duration": "12h 30m"
+}])
+
+
+
+db.train.insertMany([
+{
+  "train_id": "12450",
+  "train_name": "Karnavti express",
+  "source_station": "Ahmedabad Junction",
+  "destination_station": "mumabi central",
+  "inter_stations": ["maninagar", "anand", "vadorada", "surat","vapi","vervar","borvali"],
+  "type_of_train": "Express",
+  "type_of_coaches": [
+    {"type": "Sleeper", "price": 400},
+    {"type": "AC 3 Tier", "price": 1800},
+    {"type": "AC 2 Tier", "price": 2000},
+    {"type": "AC 1 Tier", "price": 2500}
+  ],
+  "speed": "150 km/h",
+  "duration": "6"
+},
+{
+  "train_id": "45000",
+  "train_name": "Double decker",
+  "source_station": "Mumbai cental ",
+  "destination_station": "Ahmedabad Junction ",
+  "inter_stations": ["maninagar", "anand", "vadorada", "surat","vapi","vervar"],
+  "type_of_train": "local",
+  "type_of_coaches": [
+    {"type": "Sleeper", "price": 660},
+    {"type": "AC 3 Tier", "price": 1230},
+    {"type": "AC 2 Tier", "price": 1880},
+    {"type": "AC 1 Tier", "price": 2580}
+  ],
+  "speed": "120 km/h",
+  "duration": "8"
+},
+{
+  "train_id": "56000",
+  "train_name": "vande bharat",
+  "source_station": "Varanasi junction ",
+  "destination_station": "Dwarka junction ",
+  "inter_stations": ["ujjain", "agra", "mathura", "delhi","ahmedabad"],
+  "type_of_train": "superfast",
+  "type_of_coaches": [
+    {"type": "Sleeper", "price": 1800},
+    {"type": "AC 3 Tier", "price": 2230},
+    {"type": "AC 2 Tier", "price": 2580},
+    {"type": "AC 1 Tier", "price": 3480}
+  ],
+  "speed": "180 km/h",
+  "duration": "8"
+},
+{
+  "train_id": "78000",
+  "train_name": "Ahmedabad metro",
+  "source_station": "thatlej ",
+  "destination_station": "vastral gam",
+  "inter_stations": ["doordarshan ", "commerce 6 road", "old Gujarat highcourt", "sardar patel stadium","shahpur","kalupur","kakariya","vastral"],
+  "type_of_train": "local",
+  "type_of_coaches": [
+    {"type": "Sleeper", "price": 25},
+    {"type": "AC 3 Tier", "price": 40},
+    {"type": "AC 2 Tier", "price": 80},
+    {"type": "AC 1 Tier", "price": 100}
+  ],
+  "speed": "120 km/h",
+  "duration": "1"
+}
+
+])
+
+
+db.train.find().pretty()
+
+
+1.find the all the train starting from Ahmedabad to Mumbai central
+->db.train.find({"source_station":'Ahmedabad Junction',"destination_station":'mumabi central'},{train_id":1,"source_station":1,"destination_station":1,"speed":1,_id:0})
+[
+  {
+    train_id: '12450',
+    source_station: 'Ahmedabad Junction',
+    destination_station: 'mumabi central',
+    speed: '150 km/h'
+  }
+]
+
+2.find the all the trains having four intermediate station
+->db.train.find({
+  "inter_stations": { $size: 4 }
+})
+3.replace all the intermediatestation having Mumbai to Bombay
+
+db.train.updateMany(
+  { "inter_stations": "Mumbai" },
+  { $set: { "inter_stations.$": "Bombay" } }
+)
+4.count the total number of trains coming to Ahmedabad
+
+db.train.aggregate([
+  { $match: { "destination_station": "Ahmedabad Junction" } },
+  { $group: { _id: null, total_trains: { $sum: 1 } } }
+])
+
+5.find the total number of trains in each category 
+db.train.aggregate([
+  { 
+    $group: { 
+      _id: "$type_of_train", 
+      total_trains: { $sum: 1 } 
+    } 
+  }
+])
+6.delete the records having duration 5 hours
+
+db.train.deleteMany({
+  "duration": "5 hours"
+})
+
+7.find the all the trains with ac coach having price less than 1000
+db.train.find({
+  "type_of_coaches.type": "AC 3 Tier",
+  "type_of_coaches.price": { $lt: 1000 }
+})
+
+db.train.find({
+  "type_of_coaches.type": { $in: ["AC 3 Tier", "AC 2 Tier", "AC 1 Tier"] },
+  "type_of_coaches.price": { $lt: 1000 }
+})
+
+8.find the average speed of trains based on source station
+db.train.aggregate([
+  { 
+    $group: { 
+      _id: "$source_station", 
+      average_speed: { $avg: "$speed" }
+    } 
+  }
+])
+
+
