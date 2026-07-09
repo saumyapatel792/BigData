@@ -1,0 +1,7 @@
+The primary objective of this experiment is to:
+1.	Build a Lambda Architecture combining Hadoop (batch processing) and Cassandra (real-time data serving) for music streaming analytics
+2.	Implement Real-time Data Processing using Cassandra for low-latency queries and instant data updates
+3.	Implement Batch Data Processing using Hadoop MapReduce for historical trend analysis
+4.	Create a Hybrid System that combines real-time and batch data for comprehensive analytics
+5.	Demonstrate Data Modeling techniques for both real-time and batch processing systems
+6.	Showcase Fault Tolerance and scalability in a distributed system
