@@ -1,0 +1,11 @@
+To design a query-based data model in Apache Cassandra for the Sparkify music streaming application, create optimized tables for different queries, insert sample data, and retrieve data efficiently using CQL.
+
+Procedure
+1.	Start the Cassandra Docker container. 
+2.	Connect to Cassandra using cqlsh. 
+3.	Create the sparkify keyspace. 
+4.	Create three tables optimized for different queries. 
+5.	Insert sample music streaming data. 
+6.	Execute CQL queries to retrieve the required information. 
+7.	Verify the query results. 
+8.	Exit the Cassandra shell. 
