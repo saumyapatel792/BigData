@@ -1,0 +1,135 @@
+NEO4J SOCIAL NETWORK ANALYSIS
+
+--------------------------------------------------------
+1. Create User Nodes
+--------------------------------------------------------
+
+Created 7 User nodes.
+
+Alice
+Bob
+Carol
+Dave
+Eve
+Frank
+Grace
+
+--------------------------------------------------------
+2. Create Relationships
+--------------------------------------------------------
+
+Created 12 FOLLOWS relationships.
+
+--------------------------------------------------------
+3. Basic Queries
+--------------------------------------------------------
+
+Query 1
+MATCH (u:User)
+RETURN u;
+
+Output:
+Displays all users.
+
+--------------------------------------------------------
+
+Query 2
+MATCH (a:User {name:'Alice'})
+RETURN a;
+
+Output:
+Alice's profile.
+
+--------------------------------------------------------
+
+Query 3
+MATCH (a:User {name:'Alice'})-[:FOLLOWS]->(f:User)
+RETURN a.name,f.name,f.city,f.interests;
+
+Output:
+
+Alice -> Bob
+Alice -> Carol
+
+--------------------------------------------------------
+
+Query 4
+MATCH (f:User)-[:FOLLOWS]->(a:User {name:'Alice'})
+RETURN f.name,f.city;
+
+Output:
+
+Bob
+Carol
+
+--------------------------------------------------------
+
+Query 5
+MATCH (u:User {city:'NYC'})
+RETURN u.name,u.interests;
+
+Output:
+
+Alice
+Carol
+Eve
+
+--------------------------------------------------------
+
+Query 6
+MATCH (u:User)
+WHERE 'tech' IN u.interests
+RETURN u.name,u.city;
+
+Output
+
+Alice
+Dave
+Frank
+
+--------------------------------------------------------
+Graph Traversals
+--------------------------------------------------------
+
+Followers of Followers
+
+Alice -> Bob -> Dave
+
+Alice -> Carol -> Eve
+
+--------------------------------------------------------
+
+Recommendations for Alice
+
+Dave
+Eve
+
+--------------------------------------------------------
+
+Mutual Followers
+
+Alice <-> Bob
+
+Alice <-> Carol
+
+Bob <-> Dave
+
+Carol <-> Eve
+
+--------------------------------------------------------
+
+Shortest Path
+
+Alice -> Carol -> Grace
+
+--------------------------------------------------------
+
+All Paths (Maximum 4 Hops)
+
+All valid paths between Alice and Grace up to four relationships.
+
+--------------------------------------------------------
+Conclusion
+--------------------------------------------------------
+
+Neo4j was successfully used to create a social network graph. Nodes and relationships were created, graph traversal queries were executed, shortest paths were identified, and user recommendations were generated using Cypher queries.

@@ -1,0 +1,9 @@
+CONCLUSION
+
+This lab successfully demonstrated the use of MongoDB and Neo4j for handling different types of databases.
+
+In MongoDB, an e-commerce dataset was created and analyzed using the Aggregation Framework. Various aggregation operators such as $match, $group, $unwind, $project, $sort, and $setWindowFields were used to calculate revenue, customer spending, product performance, average order value, category-wise sales, and customer lifetime value. These operations showed how MongoDB can efficiently process and analyze large collections of documents.
+
+In Neo4j, a social network graph was created using User nodes and FOLLOWS relationships. Cypher queries were executed to retrieve user information, identify followers, perform graph traversals, generate recommendations, detect mutual followers, and find shortest paths between users. This demonstrated the advantages of graph databases in analyzing connected data.
+
+Overall, the experiment provided practical experience in both document-oriented and graph databases. MongoDB proved effective for document storage and aggregation, while Neo4j demonstrated efficient graph traversal and relationship analysis.

@@ -1,0 +1,153 @@
+MONGODB AGGREGATION EXERCISE
+
+Database: ecommerceDB
+Collection: orders
+
+--------------------------------------------------------
+1. Total Revenue by Category
+--------------------------------------------------------
+
+db.orders.aggregate([
+  { $match: { status: "completed" } },
+  { $unwind: "$items" },
+  {
+    $group: {
+      _id: "$items.category",
+      total_revenue: {
+        $sum: { $multiply: ["$items.price", "$items.qty"] }
+      },
+      items_sold: { $sum: "$items.qty" }
+    }
+  },
+  { $sort: { total_revenue: -1 } }
+]);
+
+Output
+
+Electronics   Revenue: 1975   Items Sold: 8
+Furniture     Revenue: 550    Items Sold: 3
+Accessories   Revenue: 60     Items Sold: 2
+
+--------------------------------------------------------
+2. Average Order Value
+--------------------------------------------------------
+
+db.orders.aggregate([
+  { $match: { status: "completed" } },
+  { $unwind: "$items" },
+  {
+    $group: {
+      _id: "$order_id",
+      order_total: {
+        $sum: {
+          $multiply: ["$items.price", "$items.qty"]
+        }
+      }
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      avg_order_value: { $avg: "$order_total" },
+      max_order: { $max: "$order_total" },
+      min_order: { $min: "$order_total" }
+    }
+  }
+]);
+
+Output
+
+Average Order Value : 646.25
+Maximum Order Value : 850
+Minimum Order Value : 510
+
+--------------------------------------------------------
+3. Customer Spending
+--------------------------------------------------------
+
+Output
+
+Alice Johnson   970
+Bob Smith       675
+Carol White     550
+David Brown     510
+
+--------------------------------------------------------
+4. Top 3 Products by Revenue
+--------------------------------------------------------
+
+Output
+
+Laptop     Electronics     Revenue: 800
+Monitor    Electronics     Revenue: 600
+Tablet     Electronics     Revenue: 450
+
+--------------------------------------------------------
+5. Revenue by Day
+--------------------------------------------------------
+
+2024-01-15   850
+2024-01-19   675
+2024-01-20   550
+2024-01-23   510
+
+--------------------------------------------------------
+6. Category Performance
+--------------------------------------------------------
+
+Electronics : 76%
+Furniture   : 21%
+Accessories : 3%
+
+--------------------------------------------------------
+7. Orders with Multiple Items
+--------------------------------------------------------
+
+ORD-1001
+ORD-1002
+ORD-1003
+ORD-1005
+
+--------------------------------------------------------
+8. Customer Lifetime Value
+--------------------------------------------------------
+
+Alice Johnson : 970
+Bob Smith : 675
+Carol White : 550
+David Brown : 510
+
+--------------------------------------------------------
+9. Running Total Revenue
+--------------------------------------------------------
+
+2024-01-15 : 850
+2024-01-19 : 1525
+2024-01-20 : 2075
+2024-01-23 : 2585
+
+--------------------------------------------------------
+Assignment Answers
+--------------------------------------------------------
+
+1. Which category generates the most revenue?
+
+Answer:
+Electronics
+
+2. Who is the top customer by spending?
+
+Answer:
+Alice Johnson
+
+3. Which products are the best sellers?
+
+Answer:
+Laptop
+Monitor
+Tablet
+
+4. Why do we use $unwind before $group?
+
+Answer:
+The $unwind stage converts each element of an array into a separate document so that each item can be grouped and aggregated individually.
